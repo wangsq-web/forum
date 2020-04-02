@@ -73,7 +73,8 @@ exports.find = function(dbname,collectionName,json,c,d){
           callback(null,result);
           client.close();
         }).catch( err =>{
-          callback("获取数据总条数失败",null);
+          console.log(err)
+          callback("获取数据总条数",null);
           client.close();
         });
         

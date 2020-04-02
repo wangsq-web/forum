@@ -41,7 +41,6 @@ exports.doLogin = function(req,res){
     if(hash(psd) == sjkpsd){
       req.session.login = "1";
       req.session.username = result.list[0].username;
-      req.session.id = result.ops[0]._id
       res.json({success: true});
     }else{
       res.json({success: false,msg: "密码错误"});
@@ -64,15 +63,14 @@ exports.doRegister = function(req,res){
         "password": hash(req.body.password),
         "avatar": 'default.jpg',
         "dateTime": new Date().getTime(),
-      },function(err2,result){
+      },function(err2,result2){
         if(err2){
           res.json({success: false, msg: '添加用户失败'});
           return;
         }
-        console.log(result.ops[0]._id);
         req.session.login = "1";
         req.session.username = req.body.username;
-        req.session.id = result.ops[0]._id
+        req.session.id = result2.ops[0]._id
         res.json({success: true});
       })
     }else{
