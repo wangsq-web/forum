@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h3>首页</h3>
+  <% if(login){ %>
+    <p><%= name%></p>
+  <% }else{ %>
+    <p><%= msg%></p>
+    <a href="/login">登录</a>
+    <a href="/register">注册</a>
+  <% } %>
+
+  <div class="list"></div>
+
+  <script src="/js/jquery-1.9.1.min.js"></script>
+  <script>
+    $(function(){
+      $.ajaxSetup({
+        contentType : 'application/json;charset=utf-8'
+      });
+      let data = {
+        limit: 10,
+        page: 0,
+      }
+      $.ajax({
+        type: 'POST',
+        url: "/getForum",
+        data: JSON.stringify(data),
+        success: function(res){
+          if(res.success){
+            let list = res.data.list;
+            list.forEach( item => {
+              $(".list").append(`
+                <div class="item">
+                  <p>{{item.title}}</p>
+                  <p>{{item.author}} {{item.dateTime}}</p>
+                  <p>{{item.content}}</p>
+                  
+                </div>
+              `)
+            })
+          }else{
+            console.log(res.msg)
+          }
+        },
+      });
+    });
+  </script>
+</body>
+</html>

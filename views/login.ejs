@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录</title>
+</head>
+<body>
+  <h3>请登录</h3>
+  <p><a href="/register">注册</a></p>
+
+  <p>用户名： <input type="text" name="username" class="name" /></p>
+  
+  <p>密码： <input type="password" name="password" class="psd" ></p>
+  
+  <p><button class="btn">提交</button></p>
+
+<script src="/js/jquery-1.9.1.min.js"></script>
+<script>
+  $.ajaxSetup({
+    contentType : 'application/json;charset=utf-8'
+  });
+  $(".btn").click( function(){
+    let name = $(".name").val();
+    let psd = $(".psd").val()
+    let data = {
+      "username": name,
+      "password": psd
+    }
+    $.ajax({
+      type: 'POST',
+      url: "/doLogin",
+      data: JSON.stringify(data),
+      success: function(res){
+        if(res.success){
+          // console.log("登录成功")
+          window.location.href="/"
+        }else{
+          alert(res.msg)
+        }
+      },
+    });
+  });
+</script>
+</body>
+</html>
