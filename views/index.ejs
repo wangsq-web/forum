@@ -57,7 +57,7 @@
               $(".list").append(`
                 <div class="item">
                   <h4 class="f18">`+item.title+`</h4>
-                  <p class="f12 c9"> 作者：`+item.author +'  发表时间：'+ new Date(item.dateTime)+`</p>
+                  <p class="f12 c9"> 作者：`+item.author +'  发表时间：'+ new Date(parseInt(item.dateTime)).toLocaleString().replace(/:\d{1,2}$/,' ')+`</p>
                   <p class="f14">`+item.content+`</p>
                   
                 </div>
