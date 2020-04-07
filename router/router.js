@@ -14,8 +14,8 @@ exports.showIndex = function(req,res){
   }else{
     result = {
       login: false,
-      name: "",
-      msg: "你没有登录"
+      name: false,
+      msg: "你没有登录,请"
     }
   }
   res.render("index",result)
@@ -101,6 +101,10 @@ exports.getForum = function(req,res){
 exports.addForum = function(req,res){
   if(req.session.login != "1"){
     res.json({success: false, msg: '未登录异常'});
+    return;
+  }
+  if(req.body.content == '' || req.body.title == ''){
+    res.json({success: false, msg: '内容或者标题为空'});
     return;
   }
   let data = {

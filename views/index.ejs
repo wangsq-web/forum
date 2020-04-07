@@ -4,66 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    *{
-      margin: 0;
-      padding: 0;
-    }
-    .flex{
-      display: flex;
-      justify-content: space-between;
-    }
-    .center{
-      width: 800px;
-      margin: 0 auto;
-    }
-    .head{
-      line-height: 48px;
-      font-size: 16px;
-    }
-    .head img{
-      width: 48px;
-      height: 48px;
-    }
-    .item{
-      margin-bottom: 50px;
-    }
-    .bottom{
-      margin-top: 300px;
-    }
-    .bottom input,.bottom textarea{
-      width: 100%;
-    }
-    .f12{
-      font-size: 12px;
-    }
-    .c9{
-      color: #999;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/bas.css">
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
   <div class="center">
     <div class="head flex">
-      <div>首页</div>
+      <div class="f18">首页</div>
       <div>
         <% if(login){ %>
-          <p><%= name%> <img src="/images/default.jpg"></p>
+          <p class="f0 flex">
+            <span class="f18"><%= name%></span>
+            <img src="/images/default.jpg" />
+          </p>
         <% }else{ %>
-          <p><%= msg%></p>
-          <a href="/login">登录</a>
-          <a href="/register">注册</a>
+          <p class="flex"><%= msg%> <a href="/login"> 登录 </a> <a href="/register"> 注册 </a> </p>
         <% } %>
       </div>
     </div>
     <div class="list"></div>
     <div class="bottom">
       <div>
-        <p>标题</p>
+        <p class="f18">标题: </p>
         <input type="text" class="title" />
       </div>
       <div>
-        <p>内容</p>
+        <p class="f18">内容: </p>
         <textarea class="content" id="" cols="30" rows="10"></textarea>
       </div>
       <button class="btn">提交</button>
@@ -90,9 +56,9 @@
             list.forEach( item => {
               $(".list").append(`
                 <div class="item">
-                  <h4>`+item.title+`</h4>
+                  <h4 class="f18">`+item.title+`</h4>
                   <p class="f12 c9"> 作者：`+item.author +'  发表时间：'+ new Date(item.dateTime)+`</p>
-                  <p>`+item.content+`</p>
+                  <p class="f14">`+item.content+`</p>
                   
                 </div>
               `)
@@ -106,14 +72,18 @@
         let data = {
           title: $(".title").val(),
           content: $(".content").val(),
-          author: <%= name %>
+          author: '<%= name %>'
         }
         $.ajax({
           type: 'POST',
           url: "/addForum",
           data: JSON.stringify(data),
           success: function(res){
-            if(res.success){}
+            if(res.success){
+              $(".title").val('');
+              $(".content").val('');
+              alert('提交成功');
+            }
           }
         })
       })
